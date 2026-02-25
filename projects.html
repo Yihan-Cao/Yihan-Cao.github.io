@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Yihan Cao</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 40px 20px; color: #2c3e50; }
+        .back-link { text-decoration: none; color: #2ecc71; font-weight: bold; }
+        .code-block { background: #2d3436; color: #dfe6e9; padding: 20px; border-radius: 8px; font-family: monospace; overflow-x: auto; }
+        .impact-box { background: #f1f2f6; border-left: 5px solid #2ecc71; padding: 20px; margin: 20px 0; }
+        h2 { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Home</a>
+    
+    <h1>Technical Deep Dive: The A/B Testing Autopilot</h1>
+    <p><em>An agentic approach to replacing manual statistical workflows.</em></p>
+
+    <div class="impact-box">
+        <strong>The Problem:</strong> Data scientists spend hours writing repetitive SQL and boilerplate stats code for standard experiment readouts.<br>
+        <strong>The Solution:</strong> An autonomous agent that uses <strong>function calling</strong> to query databases and interpret results.
+    </div>
+
+    <h2>How it Works (The Architecture)</h2>
+    <p>The system uses a <strong>Plan-Execute-Verify</strong> loop:</p>
+    <ol>
+        <li><strong>Natural Language Input:</strong> "Check the conversion rate for the 'New Checkout' test since Monday."</li>
+        <li><strong>Tool Selection:</strong> The LLM identifies it needs `fetch_data()` and `calculate_significance()`.</li>
+        <li><strong>Verification:</strong> The agent checks for Sample Ratio Mismatch (SRM) before reporting results.</li>
+    </ol>
+
+    <h2>Sample Agent Logic (Pseudocode)</h2>
+    <div class="code-block">
+        # Example of the Agent's Tool Definition<br>
+        def calculate_significance(control_conversions, test_conversions):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;z_score, p_value = proportions_ztest(...)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;return {"p_value": p_value, "is_significant": p_value < 0.05}
+    </div>
+
+    <h2>Key Learning: Handling Edge Cases</h2>
+    <p>The biggest challenge wasn't the math—it was <strong>safety</strong>. I implemented guardrails to ensure the LLM doesn't hallucinate p-values and handles empty data sets gracefully.</p>
+
+    <footer style="margin-top: 60px; font-size: 0.8em; opacity: 0.7;">
+        <p>&copy; 2026 Yihan Cao | Built with HTML5</p>
+    </footer>
+</body>
+</html>
