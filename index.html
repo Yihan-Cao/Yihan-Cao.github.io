@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yihan Cao | Portfolio</title>
+    <title>Yihan Cao | Data Scientist & Agent Architect</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #050816;
             --card-bg: #1d1836;
-            --accent: #915EFF; /* The signature purple glow */
+            --accent: #915EFF; /* Signature purple glow */
             --text-main: #f3f3f3;
             --text-dim: #aaa6c3;
         }
@@ -42,11 +42,11 @@
 
         /* Hero Section */
         .hero {
-            padding-bottom: 100px;
+            padding-bottom: 80px;
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 8vw, 4rem);
             font-weight: 800;
             margin-bottom: 10px;
         }
@@ -56,9 +56,9 @@
         }
 
         .hero p {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: var(--text-dim);
-            max-width: 600px;
+            max-width: 700px;
         }
 
         /* Glassmorphism Cards */
@@ -66,26 +66,26 @@
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
+            padding: 35px;
+            margin-bottom: 30px;
             position: relative;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(145, 94, 255, 0.2);
         }
 
         h2 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
+            font-size: 2.2rem;
+            margin: 60px 0 30px 0;
             color: white;
         }
 
         h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
             color: var(--accent);
         }
 
@@ -93,18 +93,19 @@
             background: rgba(145, 94, 255, 0.2);
             border: 1px solid var(--accent);
             color: white;
-            padding: 5px 15px;
+            padding: 4px 12px;
             border-radius: 5px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             display: inline-block;
             margin-bottom: 15px;
         }
 
+        /* Skills Grid */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
 
@@ -115,17 +116,76 @@
             border-bottom: 4px solid var(--accent);
         }
 
+        /* Timeline / Experience */
+        .timeline {
+            position: relative;
+            border-left: 3px solid var(--accent);
+            margin-left: 15px;
+            padding-left: 35px;
+        }
+
+        .timeline-item {
+            position: relative;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -48.5px;
+            top: 40px;
+            width: 20px;
+            height: 20px;
+            background: var(--bg-dark);
+            border: 4px solid var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .exp-list {
+            margin-top: 15px;
+            color: var(--text-dim);
+            padding-left: 20px;
+            list-style: none;
+        }
+
+        .exp-list li {
+            margin-bottom: 10px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .exp-list li::before {
+            content: "▹";
+            color: var(--accent);
+            position: absolute;
+            left: -20px;
+        }
+
         a {
             color: var(--accent);
             text-decoration: none;
-            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            text-shadow: 0 0 10px var(--accent);
         }
 
         footer {
             text-align: center;
-            padding: 50px 0;
+            padding: 80px 0 40px 0;
             color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+
+        /* Contact Links */
+        .contact-links {
+            margin-top: 20px;
+        }
+
+        .contact-links a {
+            margin-right: 20px;
             font-size: 0.9rem;
+            color: var(--text-dim);
         }
 
     </style>
@@ -137,37 +197,82 @@
     <div class="container">
         <header class="hero">
             <h1>Hi, I'm <span>Yihan Cao</span></h1>
-            <p>I architect <strong>Agentic Systems</strong> and transform manual data workflows into autonomous intelligence.</p>
+            <p>Data Scientist & Automation Architect based in Trondheim. I specialize in <strong>Machine Learning</strong> and <strong>Agentic AI</strong> to transform manual workflows into impactful, autonomous systems.</p>
+            <div class="contact-links">
+                <a href="mailto:yihan.cao@outlook.com">Email</a>
+                <a href="https://www.linkedin.com/in/caoyihan/">LinkedIn</a>
+                <a href="projects.html">Technical Projects</a>
+            </div>
         </header>
 
         <section class="card">
-            <span class="tag">The Evolution</span>
-            <h3>Manual Analysis ⮕ Autonomous Agents</h3>
-            <p style="color: var(--text-dim);">I am bridging the gap between traditional Data Science and the 2026 Agentic Revolution. My focus is building LLM-driven systems that don't just "analyze," but act.</p>
-            <br>
-            <p><a href="projects.html">View Case Studies →</a></p>
+            <span class="tag">The Vision</span>
+            <h3>Bridging Stats & Autonomous AI</h3>
+            <p style="color: var(--text-dim);">With a strong foundation in statistics and mathematics [cite: 11], I drive product innovation by applying statistical rigor and AI to deliver clear, impactful insights[cite: 5, 11]. My current focus is integrating LLMs and agents to enhance analytical capabilities[cite: 6].</p>
         </section>
+
+        <h2>Experience</h2>
+        <div class="timeline">
+            <div class="card timeline-item">
+                <div class="timeline-dot"></div>
+                <span class="tag">Jun 2022 - Jun 2025</span>
+                <h3>Data Scientist</h3>
+                <p style="color: var(--accent); font-weight: 600;">Zedge Inc (NYSE: ZDGE)</p>
+                <ul class="exp-list">
+                    <li>Developed a recommender system achieving a <strong>43% increase</strong> in North Star metrics.</li>
+                    <li>Deployed scalable machine learning models focusing on performance and feature engineering[cite: 19, 20].</li>
+                    <li>Designed A/B tests and conducted user behavior analyses to guide product strategy[cite: 4, 21].</li>
+                    <li>Automated data workflows and pipelines in partnership with data engineers[cite: 22].</li>
+                    <li>Created stakeholder dashboards and models to forecast revenue and active users[cite: 23, 24].</li>
+                </ul>
+            </div>
+
+            <div class="card timeline-item">
+                <div class="timeline-dot"></div>
+                <span class="tag">Jan 2021 - Dec 2021</span>
+                <h3>Researcher</h3>
+                <p style="color: var(--accent); font-weight: 600;">Oslo University</p>
+                <ul class="exp-list">
+                    <li>Utilized state-space models and large-scale datasets to analyze infection rate factors[cite: 29].</li>
+                    <li>Published research in leading journals regarding spatiotemporal virus dynamics[cite: 27, 30].</li>
+                </ul>
+            </div>
+        </div>
 
         <h2>Technical Arsenal</h2>
         <div class="grid">
             <div class="skill-item">
-                <h4 style="color: var(--accent);">Agent Architecture</h4>
-                <p style="font-size: 0.9rem; color: var(--text-dim);">LangGraph, Tool-Calling, Function Definition, Multi-Agent Orchestration.</p>
+                <h4 style="color: var(--accent);">ML & Stats</h4>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">Statistical Modeling, Bayesian Analysis, Deep Learning, Optimization, Tensorflow[cite: 13].</p>
             </div>
             <div class="skill-item">
-                <h4 style="color: var(--accent);">Data Science</h4>
-                <p style="font-size: 0.9rem; color: var(--text-dim);">Python, SQL, PyTorch, A/B Testing, Statistical Modeling.</p>
+                <h4 style="color: var(--accent);">Tools & Code</h4>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">Python, SQL, R, AirFlow, DBT, Git, Tableau, TensorFlow[cite: 13].</p>
+            </div>
+            <div class="skill-item">
+                <h4 style="color: var(--accent);">Modern AI</h4>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">LLM Integration, Agentic Workflows, Convolutional Neural Networks[cite: 6, 54].</p>
             </div>
         </div>
 
-        <section class="card" style="margin-top: 50px;">
-            <span class="tag">Flagship Project</span>
-            <h3>The A/B Testing Autopilot</h3>
-            <p style="color: var(--text-dim);">A production-ready agent that automates SQL extraction, statistical validation, and natural language reporting.</p>
-        </section>
+        <h2>Education</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="tag">PhD Candidate</span>
+                <h3>Statistics</h3>
+                <p>NTNU, Norway [cite: 38, 39]</p>
+                <p style="font-size: 0.85rem; color: var(--text-dim); margin-top:10px;">Focused on stochastic processes and advanced statistical methods[cite: 40].</p>
+            </div>
+            <div class="card">
+                <span class="tag">Master of Stats</span>
+                <h3>KU Leuven</h3>
+                <p>Belgium [cite: 45, 46]</p>
+                <p style="font-size: 0.85rem; color: var(--text-dim); margin-top:10px;">Core: Machine Learning, Bayesian Analysis, Linear Models[cite: 48].</p>
+            </div>
+        </div>
 
         <footer>
-            <p>&copy; 2026 Yihan Cao | Built with the Arjun-Inspired Theme</p>
+            <p>&copy; 2026 Yihan Cao | Built with Arjun-inspired 3D UI</p>
         </footer>
     </div>
 
@@ -184,12 +289,12 @@
         window.addEventListener('resize', resize);
         resize();
 
-        for(let i = 0; i < 150; i++) {
+        for(let i = 0; i < 200; i++) {
             stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 size: Math.random() * 1.5,
-                speed: Math.random() * 0.3
+                speed: Math.random() * 0.4
             });
         }
 
