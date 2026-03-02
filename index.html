@@ -15,6 +15,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--bg-dark);
@@ -186,6 +187,92 @@
             left: -20px;
         }
 
+        /* Contact Section Specific Styles */
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .contact-form {
+            flex: 1.5;
+            min-width: 300px;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group input, .form-group textarea {
+            background: #161030;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(128, 30, 189, 0.3);
+        }
+
+        .send-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        .info-block h4 {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .decorative-sphere {
+            width: 100px;
+            height: 100px;
+            background: var(--accent);
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0.4;
+            position: absolute;
+            bottom: 10%;
+            right: 10%;
+            z-index: -1;
+            animation: pulse 4s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); opacity: 0.3; }
+            to { transform: scale(1.5); opacity: 0.5; }
+        }
+
         a {
             color: var(--accent);
             text-decoration: none;
@@ -203,7 +290,6 @@
             font-size: 0.8rem;
         }
 
-        /* Contact Links */
         .contact-links {
             margin-top: 20px;
         }
@@ -227,7 +313,8 @@
             <div class="contact-links">
                 <a href="mailto:yihan.cao@outlook.com">Email</a>
                 <a href="https://www.linkedin.com/in/caoyihan/">LinkedIn</a>
-                <a href="projects.html">Technical Projects</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
             </div>
         </header>
 
@@ -237,13 +324,13 @@
             <p style="color: var(--text-dim);">With a strong foundation in statistics and mathematics, I drive product innovation by applying statistical rigor and AI to deliver clear, impactful insights. My current focus is integrating LLMs and agents to enhance analytical capabilities.</p>
         </section>
 
-        <h2>Featured Projects</h2>
+        <h2 id="projects">Featured Projects</h2>
         <div class="projects-grid">
             <div class="card project-card">
                 <div>
                     <span class="tag">AI & Automation</span>
                     <h3>A/B Testing Autopilot</h3>
-                    <p style="color: var(--text-dim); font-size: 0.9rem;">An autonomous agent architecture that automates SQL extraction, statistical validation, and natural language reporting for product experiments.</p>
+                    <p style="color: var(--text-dim); font-size: 0.9rem;">An autonomous agent architecture that automates SQL extraction, statistical validation, and natural language reporting.</p>
                 </div>
                 <div class="project-tags">
                     <span class="p-tag">#LangChain</span>
@@ -256,25 +343,12 @@
                 <div>
                     <span class="tag">Machine Learning</span>
                     <h3>Zedge Recommender</h3>
-                    <p style="color: var(--text-dim); font-size: 0.9rem;">Redesigned a production recommender system at scale, achieving a 43% increase in North Star metrics through improved feature engineering.</p>
+                    <p style="color: var(--text-dim); font-size: 0.9rem;">Redesigned a production recommender system at scale, achieving a 43% increase in North Star metrics.</p>
                 </div>
                 <div class="project-tags">
                     <span class="p-tag">#TensorFlow</span>
                     <span class="p-tag">#BigData</span>
                     <span class="p-tag">#RecSys</span>
-                </div>
-            </div>
-
-            <div class="card project-card">
-                <div>
-                    <span class="tag">Statistical Research</span>
-                    <h3>Infection Dynamics</h3>
-                    <p style="color: var(--text-dim); font-size: 0.9rem;">Spatiotemporal state-space modeling on 1TB+ datasets to quantify environmental and social drivers of infection rates.</p>
-                </div>
-                <div class="project-tags">
-                    <span class="p-tag">#R-Stats</span>
-                    <span class="p-tag">#Bayesian</span>
-                    <span class="p-tag">#Research</span>
                 </div>
             </div>
         </div>
@@ -290,19 +364,6 @@
                     <li>Developed a recommender system achieving a <strong>43% increase</strong> in North Star metrics.</li>
                     <li>Deployed scalable machine learning models focusing on performance and feature engineering.</li>
                     <li>Designed A/B tests and conducted user behavior analyses to guide product strategy.</li>
-                    <li>Automated data workflows and pipelines in partnership with data engineers.</li>
-                    <li>Created stakeholder dashboards and models to forecast revenue and active users.</li>
-                </ul>
-            </div>
-
-            <div class="card timeline-item">
-                <div class="timeline-dot"></div>
-                <span class="tag">Jan 2021 - Dec 2021</span>
-                <h3>Researcher</h3>
-                <p style="color: var(--accent); font-weight: 600;">Oslo University</p>
-                <ul class="exp-list">
-                    <li>Utilized state-space models and large-scale datasets to analyze infection rate factors.</li>
-                    <li>Published research in leading journals regarding spatiotemporal virus dynamics.</li>
                 </ul>
             </div>
         </div>
@@ -311,33 +372,50 @@
         <div class="grid">
             <div class="skill-item">
                 <h4 style="color: var(--accent);">ML & Stats</h4>
-                <p style="font-size: 0.9rem; color: var(--text-dim);">Statistical Modeling, Bayesian Analysis, Deep Learning, Optimization, Tensorflow.</p>
-            </div>
-            <div class="skill-item">
-                <h4 style="color: var(--accent);">Tools & Code</h4>
-                <p style="font-size: 0.9rem; color: var(--text-dim);">Python, SQL, R, AirFlow, DBT, Git, Tableau, TensorFlow.</p>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">Statistical Modeling, Bayesian Analysis, Deep Learning, Optimization.</p>
             </div>
             <div class="skill-item">
                 <h4 style="color: var(--accent);">Modern AI</h4>
-                <p style="font-size: 0.9rem; color: var(--text-dim);">LLM Integration, Agentic Workflows, Convolutional Neural Networks.</p>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">LLM Integration, Agentic Workflows, LangGraph.</p>
             </div>
         </div>
 
-        <h2>Education</h2>
-        <div class="grid">
-            <div class="card">
-                <span class="tag">PhD Candidate</span>
-                <h3>Statistics</h3>
-                <p>NTNU, Norway</p>
-                <p style="font-size: 0.85rem; color: var(--text-dim); margin-top:10px;">Focused on stochastic processes and advanced statistical methods.</p>
+        <h2 id="contact">Contact</h2>
+        <section class="card">
+            <div class="decorative-sphere"></div>
+            <div class="contact-container">
+                <div class="contact-form">
+                    <span class="tag">Get in touch</span>
+                    <h3>Contact.</h3>
+                    <form action="https://formspree.io/f/your-id-here" method="POST">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="What's your name?" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="What's your email?" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" rows="5" placeholder="What do you want to say?" required></textarea>
+                        </div>
+                        <button type="submit" class="send-btn">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="info-block">
+                        <h4>Location</h4>
+                        <p>Trondheim, Norway</p>
+                    </div>
+                    <div class="info-block">
+                        <h4>Email</h4>
+                        <p><a href="mailto:yihan.cao@outlook.com">yihan.cao@outlook.com</a></p>
+                    </div>
+                    <div class="info-block">
+                        <h4>Social</h4>
+                        <p><a href="https://www.linkedin.com/in/caoyihan/">LinkedIn Profile</a></p>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <span class="tag">Master of Stats</span>
-                <h3>KU Leuven</h3>
-                <p>Belgium</p>
-                <p style="font-size: 0.85rem; color: var(--text-dim); margin-top:10px;">Core: Machine Learning, Bayesian Analysis, Linear Models.</p>
-            </div>
-        </div>
+        </section>
 
         <footer>
             <p>&copy; 2026 Yihan Cao | Built with Arjun-inspired 3D UI</p>
