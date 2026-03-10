@@ -1,463 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yihan Cao | Data Scientist & Agent Architect</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #050816;
-            --card-bg: #1d1836;
-            --accent: #ffcc33; /* Signature purple glow */
-            --text-main: #f3f3f3;
-            --text-dim: #aaa6c3;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yihan Cao | Data Scientist & Agent Architect</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-dark: #050816;
+  --card-bg: #1d1836;
+  --accent: #ffcc33;
+  --text-main: #f3f3f3;
+  --text-dim: #aaa6c3;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+#starCanvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background: radial-gradient(circle at center, #111 0%, #050816 100%);
+}
+.container { max-width: 1000px; margin: 0 auto; padding: 80px 20px; }
+.hero { padding-bottom: 80px; }
+.hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 800; margin-bottom: 10px; }
+.hero h1 span { color: var(--accent); }
+.hero p { font-size: 1.2rem; color: var(--text-dim); max-width: 700px; }
+.card {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 35px;
+  margin-bottom: 30px;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(128, 30, 189, 0.3);
+}
+h2 { font-size: 2.2rem; margin: 60px 0 30px 0; color: white; }
+h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--accent); }
+.tag {
+  background: rgba(145, 94, 255, 0.2);
+  border: 1px solid var(--accent);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.project-card { display: flex; flex-direction: column; justify-content: space-between; }
+.project-tags { margin-top: 15px; display: flex; flex-wrap: wrap; gap: 8px; }
+.p-tag { font-size: 0.7rem; color: var(--accent); font-weight: 600; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+/* ── Clickable card ── */
+a.card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 20px;
+}
+a.card-link .card {
+  margin-bottom: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+a.card-link:hover .card {
+  transform: translateY(-7px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 28px rgba(255, 204, 51, 0.35);
+  border-color: var(--accent);
+}
+.card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  transition: gap 0.25s;
+}
+a.card-link:hover .card-cta { gap: 12px; }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* 3D-like Star Background Canvas */
-        #starCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at center, #111 0%, #050816 100%);
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding-bottom: 80px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .hero h1 span {
-            color: var(--accent);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-dim);
-            max-width: 700px;
-        }
-
-        /* Glassmorphism Cards */
-        .card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 35px;
-            margin-bottom: 30px;
-            position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(128, 30, 189, 0.3);
-        }
-
-        h2 {
-            font-size: 2.2rem;
-            margin: 60px 0 30px 0;
-            color: white;
-        }
-
-        h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: var(--accent);
-        }
-
-        .tag {
-            background: rgba(145, 94, 255, 0.2);
-            border: 1px solid var(--accent);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 5px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .project-card {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .project-tags {
-            margin-top: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .p-tag {
-            font-size: 0.7rem;
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        /* Skills Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .skill-item {
-            background: #161030;
-            padding: 20px;
-            border-radius: 15px;
-            border-bottom: 4px solid var(--accent);
-        }
-
-        /* Timeline / Experience */
-        .timeline {
-            position: relative;
-            border-left: 3px solid var(--accent);
-            margin-left: 15px;
-            padding-left: 35px;
-        }
-
-        .timeline-item {
-            position: relative;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: -48.5px;
-            top: 40px;
-            width: 20px;
-            height: 20px;
-            background: var(--bg-dark);
-            border: 4px solid var(--accent);
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        .exp-list {
-            margin-top: 15px;
-            color: var(--text-dim);
-            padding-left: 20px;
-            list-style: none;
-        }
-
-        .exp-list li {
-            margin-bottom: 10px;
-            position: relative;
-            font-size: 0.95rem;
-        }
-
-        .exp-list li::before {
-            content: "▹";
-            color: var(--accent);
-            position: absolute;
-            left: -20px;
-        }
-
-        /* Contact Section Specific Styles */
-        .contact-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-        }
-
-        .contact-form {
-            flex: 1.5;
-            min-width: 300px;
-        }
-
-        .contact-info {
-            flex: 1;
-            min-width: 250px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group input, .form-group textarea {
-            background: #161030;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            padding: 15px;
-            color: white;
-            font-family: inherit;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(128, 30, 189, 0.3);
-        }
-
-        .send-btn {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .send-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px var(--accent);
-        }
-
-        .info-block h4 {
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        .decorative-sphere {
-            width: 100px;
-            height: 100px;
-            background: var(--accent);
-            border-radius: 50%;
-            filter: blur(50px);
-            opacity: 0.4;
-            position: absolute;
-            bottom: 10%;
-            right: 10%;
-            z-index: -1;
-            animation: pulse 4s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from { transform: scale(1); opacity: 0.3; }
-            to { transform: scale(1.5); opacity: 0.5; }
-        }
-
-        a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        a:hover {
-            text-shadow: 0 0 10px var(--accent);
-        }
-
-        footer {
-            text-align: center;
-            padding: 80px 0 40px 0;
-            color: var(--text-dim);
-            font-size: 0.8rem;
-        }
-
-        .contact-links {
-            margin-top: 20px;
-        }
-
-        .contact-links a {
-            margin-right: 20px;
-            font-size: 0.9rem;
-            color: var(--text-dim);
-        }
-
-    </style>
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.skill-item { background: #161030; padding: 20px; border-radius: 15px; border-bottom: 4px solid var(--accent); }
+.timeline { position: relative; border-left: 3px solid var(--accent); margin-left: 15px; padding-left: 35px; }
+.timeline-item { position: relative; }
+.timeline-dot {
+  position: absolute; left: -48.5px; top: 40px;
+  width: 20px; height: 20px;
+  background: var(--bg-dark);
+  border: 4px solid var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--accent);
+}
+.exp-list { margin-top: 15px; color: var(--text-dim); padding-left: 20px; list-style: none; }
+.exp-list li { margin-bottom: 10px; position: relative; font-size: 0.95rem; }
+.exp-list li::before { content: "▹"; color: var(--accent); position: absolute; left: -20px; }
+.contact-container { display: flex; flex-wrap: wrap; gap: 40px; }
+.contact-form { flex: 1.5; min-width: 300px; }
+.contact-info { flex: 1; min-width: 250px; display: flex; flex-direction: column; gap: 25px; }
+.form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+.form-group input, .form-group textarea {
+  background: #161030; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; padding: 15px; color: white; font-family: inherit; outline: none; transition: 0.3s;
+}
+.form-group input:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(128, 30, 189, 0.3); }
+.send-btn { background: var(--accent); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+.send-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent); }
+.info-block h4 { color: var(--text-dim); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
+.decorative-sphere {
+  width: 100px; height: 100px; background: var(--accent); border-radius: 50%;
+  filter: blur(50px); opacity: 0.4; position: absolute; bottom: 10%; right: 10%; z-index: -1;
+  animation: pulse 4s infinite alternate;
+}
+@keyframes pulse { from { transform: scale(1); opacity: 0.3; } to { transform: scale(1.5); opacity: 0.5; } }
+a { color: var(--accent); text-decoration: none; transition: 0.3s; }
+a:hover { text-shadow: 0 0 10px var(--accent); }
+footer { text-align: center; padding: 80px 0 40px 0; color: var(--text-dim); font-size: 0.8rem; }
+.contact-links { margin-top: 20px; }
+.contact-links a { margin-right: 20px; font-size: 0.9rem; color: var(--text-dim); }
+</style>
 </head>
 <body>
+<canvas id="starCanvas"></canvas>
+<div class="container">
 
-    <canvas id="starCanvas"></canvas>
+  <header class="hero">
+    <h1>Hi, I'm <span>Yihan Cao</span></h1>
+    <p>Data Scientist & Automation Architect based in Trondheim. I specialize in <strong>Machine Learning</strong> and <strong>Agentic AI</strong> to transform manual workflows into impactful, autonomous systems.</p>
+    <div class="contact-links">
+      <a href="mailto:yihan.cao@outlook.com">Email</a>
+      <a href="https://www.linkedin.com/in/caoyihan/">LinkedIn</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
 
-    <div class="container">
-        <header class="hero">
-            <h1>Hi, I'm <span>Yihan Cao</span></h1>
-            <p>Data Scientist & Automation Architect based in Trondheim. I specialize in <strong>Machine Learning</strong> and <strong>Agentic AI</strong> to transform manual workflows into impactful, autonomous systems.</p>
-            <div class="contact-links">
-                <a href="mailto:yihan.cao@outlook.com">Email</a>
-                <a href="https://www.linkedin.com/in/caoyihan/">LinkedIn</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </header>
+  <section class="card">
+    <span class="tag">The Vision</span>
+    <h3>Bridging Stats & Autonomous AI</h3>
+    <p style="color: var(--text-dim);">With a strong foundation in statistics and mathematics, I drive product innovation by applying statistical rigor and AI to deliver clear, impactful insights. My current focus is integrating LLMs and agents to enhance analytical capabilities.</p>
+  </section>
 
-        <section class="card">
-            <span class="tag">The Vision</span>
-            <h3>Bridging Stats & Autonomous AI</h3>
-            <p style="color: var(--text-dim);">With a strong foundation in statistics and mathematics, I drive product innovation by applying statistical rigor and AI to deliver clear, impactful insights. My current focus is integrating LLMs and agents to enhance analytical capabilities.</p>
-        </section>
+  <h2 id="projects">Featured Projects</h2>
+  <div class="projects-grid">
 
-        <h2 id="projects">Featured Projects</h2>
-        <div class="projects-grid">
-            <div class="card project-card">
-                <div>
-                    <span class="tag">AI & Automation</span>
-                    <h3>A/B Testing Autopilot</h3>
-                    <p style="color: var(--text-dim); font-size: 0.9rem;">An autonomous agent architecture that automates SQL extraction, statistical validation, and natural language reporting.</p>
-                </div>
-                <div class="project-tags">
-                    <span class="p-tag">#LangChain</span>
-                    <span class="p-tag">#OpenAI</span>
-                    <span class="p-tag">#Python</span>
-                </div>
-            </div>
-
-            <div class="card project-card">
-                <div>
-                    <span class="tag">Machine Learning</span>
-                    <h3>Zedge Recommender</h3>
-                    <p style="color: var(--text-dim); font-size: 0.9rem;">Redesigned a production recommender system at scale, achieving a 43% increase in North Star metrics.</p>
-                </div>
-                <div class="project-tags">
-                    <span class="p-tag">#TensorFlow</span>
-                    <span class="p-tag">#BigData</span>
-                    <span class="p-tag">#RecSys</span>
-                </div>
-            </div>
+    <!-- A/B Testing — clickable -->
+    <a href="ab-testing.html" class="card-link">
+      <div class="card project-card">
+        <div>
+          <span class="tag">AI & Automation</span>
+          <h3>A/B Testing Autopilot</h3>
+          <p style="color: var(--text-dim); font-size: 0.9rem;">An autonomous agent architecture that automates SQL extraction, statistical validation, and natural language reporting.</p>
         </div>
-
-        <h2>Experience</h2>
-        <div class="timeline">
-            <div class="card timeline-item">
-                <div class="timeline-dot"></div>
-                <span class="tag">Jun 2022 - Jun 2025</span>
-                <h3>Data Scientist</h3>
-                <p style="color: var(--accent); font-weight: 600;">Zedge Inc (NYSE: ZDGE)</p>
-                <ul class="exp-list">
-                    <li>Developed a recommender system achieving a <strong>43% increase</strong> in North Star metrics.</li>
-                    <li>Deployed scalable machine learning models focusing on performance and feature engineering.</li>
-                    <li>Designed A/B tests and conducted user behavior analyses to guide product strategy.</li>
-                </ul>
-            </div>
+        <div class="project-tags">
+          <span class="p-tag">#LangChain</span>
+          <span class="p-tag">#OpenAI</span>
+          <span class="p-tag">#Python</span>
         </div>
+        <span class="card-cta">View project &nbsp;→</span>
+      </div>
+    </a>
 
-        <h2>Technical Arsenal</h2>
-        <div class="grid">
-            <div class="skill-item">
-                <h4 style="color: var(--accent);">ML & Stats</h4>
-                <p style="font-size: 0.9rem; color: var(--text-dim);">Statistical Modeling, Bayesian Analysis, Deep Learning, Optimization.</p>
-            </div>
-            <div class="skill-item">
-                <h4 style="color: var(--accent);">Modern AI</h4>
-                <p style="font-size: 0.9rem; color: var(--text-dim);">LLM Integration, Agentic Workflows, LangGraph.</p>
-            </div>
-        </div>
-
-        <h2 id="contact">Contact</h2>
-        <section class="card">
-            <div class="decorative-sphere"></div>
-            <div class="contact-container">
-                <div class="contact-form">
-                    <span class="tag">Get in touch</span>
-                    <h3>Contact.</h3>
-                    <form action="https://formspree.io/f/your-id-here" method="POST">
-                        <div class="form-group">
-                            <input type="text" name="name" placeholder="What's your name?" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" name="email" placeholder="What's your email?" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea name="message" rows="5" placeholder="What do you want to say?" required></textarea>
-                        </div>
-                        <button type="submit" class="send-btn">Send Message</button>
-                    </form>
-                </div>
-                <div class="contact-info">
-                    <div class="info-block">
-                        <h4>Location</h4>
-                        <p>Trondheim, Norway</p>
-                    </div>
-                    <div class="info-block">
-                        <h4>Email</h4>
-                        <p><a href="mailto:yihan.cao@outlook.com">yihan.cao@outlook.com</a></p>
-                    </div>
-                    <div class="info-block">
-                        <h4>Social</h4>
-                        <p><a href="https://www.linkedin.com/in/caoyihan/">LinkedIn Profile</a></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>&copy; 2026 Yihan Cao | Built with Arjun-inspired 3D UI</p>
-        </footer>
+    <!-- Zedge Recommender — unchanged -->
+    <div class="card project-card">
+      <div>
+        <span class="tag">Machine Learning</span>
+        <h3>Zedge Recommender</h3>
+        <p style="color: var(--text-dim); font-size: 0.9rem;">Redesigned a production recommender system at scale, achieving a 43% increase in North Star metrics.</p>
+      </div>
+      <div class="project-tags">
+        <span class="p-tag">#TensorFlow</span>
+        <span class="p-tag">#BigData</span>
+        <span class="p-tag">#RecSys</span>
+      </div>
     </div>
 
-    <script>
-        const canvas = document.getElementById('starCanvas');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
+  </div>
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+  <h2>Experience</h2>
+  <div class="timeline">
+    <div class="card timeline-item">
+      <div class="timeline-dot"></div>
+      <span class="tag">Jun 2022 - Jun 2025</span>
+      <h3>Data Scientist</h3>
+      <p style="color: var(--accent); font-weight: 600;">Zedge Inc (NYSE: ZDGE)</p>
+      <ul class="exp-list">
+        <li>Developed a recommender system achieving a <strong>43% increase</strong> in North Star metrics.</li>
+        <li>Deployed scalable machine learning models focusing on performance and feature engineering.</li>
+        <li>Designed A/B tests and conducted user behavior analyses to guide product strategy.</li>
+      </ul>
+    </div>
+  </div>
 
-        window.addEventListener('resize', resize);
-        resize();
+  <h2>Technical Arsenal</h2>
+  <div class="grid">
+    <div class="skill-item">
+      <h4 style="color: var(--accent);">ML & Stats</h4>
+      <p style="font-size: 0.9rem; color: var(--text-dim);">Statistical Modeling, Bayesian Analysis, Deep Learning, Optimization.</p>
+    </div>
+    <div class="skill-item">
+      <h4 style="color: var(--accent);">Modern AI</h4>
+      <p style="font-size: 0.9rem; color: var(--text-dim);">LLM Integration, Agentic Workflows, LangGraph.</p>
+    </div>
+  </div>
 
-        for(let i = 0; i < 200; i++) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 1.5,
-                speed: Math.random() * 0.4
-            });
-        }
+  <h2 id="contact">Contact</h2>
+  <section class="card">
+    <div class="decorative-sphere"></div>
+    <div class="contact-container">
+      <div class="contact-form">
+        <span class="tag">Get in touch</span>
+        <h3>Contact.</h3>
+        <form action="https://formspree.io/f/your-id-here" method="POST">
+          <div class="form-group">
+            <input type="text" name="name" placeholder="What's your name?" required>
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" placeholder="What's your email?" required>
+          </div>
+          <div class="form-group">
+            <textarea name="message" rows="5" placeholder="What do you want to say?" required></textarea>
+          </div>
+          <button type="submit" class="send-btn">Send Message</button>
+        </form>
+      </div>
+      <div class="contact-info">
+        <div class="info-block">
+          <h4>Location</h4>
+          <p>Trondheim, Norway</p>
+        </div>
+        <div class="info-block">
+          <h4>Email</h4>
+          <p><a href="mailto:yihan.cao@outlook.com">yihan.cao@outlook.com</a></p>
+        </div>
+        <div class="info-block">
+          <h4>Social</h4>
+          <p><a href="https://www.linkedin.com/in/caoyihan/">LinkedIn Profile</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "white";
-            stars.forEach(star => {
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-                ctx.fill();
-                star.y -= star.speed;
-                if(star.y < 0) star.y = canvas.height;
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-    </script>
+  <footer>
+    <p>&copy; 2026 Yihan Cao | Built with Arjun-inspired 3D UI</p>
+  </footer>
+</div>
 
+<script>
+const canvas = document.getElementById('starCanvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize);
+resize();
+for (let i = 0; i < 200; i++) {
+  stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 1.5, speed: Math.random() * 0.4 });
+}
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "white";
+  stars.forEach(star => {
+    ctx.beginPath(); ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2); ctx.fill();
+    star.y -= star.speed;
+    if (star.y < 0) star.y = canvas.height;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
 </body>
 </html>
