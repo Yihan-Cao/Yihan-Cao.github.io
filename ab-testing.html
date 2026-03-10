@@ -1,1 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A/B Testing Autopilot | Yihan Cao</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-dark: #050816;
+  --card-bg: #1d1836;
+  --accent: #ffcc33;
+  --text-main: #f3f3f3;
+  --text-dim: #aaa6c3;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+#starCanvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background: radial-gradient(circle at center, #111 0%, #050816 100%);
+}
+.container { max-width: 900px; margin: 0 auto; padding: 60px 20px 120px; }
 
+/* Back navigation */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-bottom: 56px;
+  transition: color 0.25s, gap 0.25s;
+}
+.back-btn:hover { color: var(--accent); gap: 14px; text-shadow: none; }
+.back-btn svg { transition: transform 0.25s; }
+.back-btn:hover svg { transform: translateX(-3px); }
+
+/* Page header */
+.page-header { margin-bottom: 48px; }
+.tag {
+  background: rgba(145, 94, 255, 0.2);
+  border: 1px solid var(--accent);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 18px;
+}
+.page-header h1 {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.page-header p {
+  font-size: 1.05rem;
+  color: var(--text-dim);
+  max-width: 660px;
+  line-height: 1.75;
+}
+.tech-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.chip {
+  padding: 5px 16px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 204, 51, 0.35);
+  background: rgba(255, 204, 51, 0.08);
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 35px;
+  margin-bottom: 28px;
+  position: relative;
+}
+.card h2 { font-size: 1.35rem; color: white; margin-bottom: 6px; }
+.card .sub { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 24px; }
+
+/* ── Video area ── */
+.video-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 204, 51, 0.2);
+  background: #0b0920;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Placeholder shown until a video src is provided */
+.video-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 48px 32px;
+  text-align: center;
+  width: 100%;
+}
+.play-ring {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 204, 51, 0.35);
+  display: flex; align-items: center; justify-content: center;
+  animation: ringPulse 2.8s ease-in-out infinite;
+}
+.play-ring svg { fill: var(--accent); opacity: 0.75; }
+@keyframes ringPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,204,51,0.25); }
+  50%       { box-shadow: 0 0 0 12px rgba(255,204,51,0); }
+}
+.video-placeholder strong { font-size: 0.95rem; color: var(--text-main); }
+.video-placeholder span {
+  font-size: 0.78rem;
+  color: rgba(170,166,195,0.5);
+  font-style: italic;
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+/* ── How it works ── */
+.steps { list-style: none; padding: 0; margin-top: 4px; }
+.steps li {
+  display: flex;
+  gap: 18px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+.steps li:last-child { border-bottom: none; }
+.step-num {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,204,51,0.12);
+  border: 1px solid rgba(255,204,51,0.35);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 2px;
+}
+
+/* ── Meta grid ── */
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+.meta-block h4 { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+.meta-block p { font-size: 0.92rem; color: var(--text-main); line-height: 1.6; }
+
+a { color: var(--accent); text-decoration: none; transition: 0.3s; }
+a:hover { text-shadow: 0 0 10px var(--accent); }
+</style>
+</head>
+<body>
+<canvas id="starCanvas"></canvas>
+<div class="container">
+
+  <a href="index.html" class="back-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to portfolio
+  </a>
+
+  <!-- Header -->
+  <div class="page-header">
+    <span class="tag">AI & Automation</span>
+    <h1>A/B Testing Autopilot</h1>
+    <p>An autonomous agent architecture that eliminates hours of manual analyst work by automating the full A/B testing pipeline — from SQL extraction and statistical validation to natural language reporting.</p>
+    <div class="tech-row">
+      <span class="chip">LangChain</span>
+      <span class="chip">OpenAI</span>
+      <span class="chip">Python</span>
+      <span class="chip">SQL</span>
+      <span class="chip">SciPy</span>
+    </div>
+  </div>
+
+  <!-- Video -->
+  <div class="card">
+    <h2>Agent Demo</h2>
+    <p class="sub">Watch the agent run an end-to-end A/B test autonomously.</p>
+
+    <div class="video-frame">
+      <!--
+        ════════════════════════════════════════════════
+        HOW TO ADD YOUR VIDEO — choose one option:
+
+        OPTION A  Upload video file to GitHub repo root
+        ─────────────────────────────────────────────
+        Replace everything inside .video-frame with:
+
+          <video controls src="demo.mp4"
+                 style="width:100%;height:100%;object-fit:contain;">
+          </video>
+
+        OPTION B  YouTube embed
+        ─────────────────────────────────────────────
+        Replace everything inside .video-frame with:
+
+          <iframe width="100%" height="100%"
+            src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            frameborder="0" allowfullscreen
+            style="border:none; display:block;">
+          </iframe>
+
+        OPTION C  Any direct video URL
+        ─────────────────────────────────────────────
+        Replace everything inside .video-frame with:
+
+          <video controls src="https://example.com/your-demo.mp4"
+                 style="width:100%;height:100%;object-fit:contain;">
+          </video>
+
+        ════════════════════════════════════════════════
+        DELETE the placeholder div below once done.
+        ════════════════════════════════════════════════
+      -->
+      <div class="video-placeholder">
+        <div class="play-ring">
+          <svg width="30" height="30" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <strong>Demo video coming soon</strong>
+        <span>Upload your video and replace the placeholder comment in <code>ab-testing.html</code> with the appropriate embed code above.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="card">
+    <h2>How It Works</h2>
+    <p class="sub">The agent handles each stage of the testing workflow without human intervention.</p>
+    <ol class="steps">
+      <li>
+        <span class="step-num">1</span>
+        <span>Receives a plain-language experiment description and autonomously generates the SQL queries needed to extract the relevant user cohorts from the data warehouse.</span>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <span>Validates statistical assumptions — normality, minimum detectable effect, sample size adequacy, and variance homogeneity — flagging any violations before proceeding.</span>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <span>Runs the appropriate hypothesis tests (t-test, z-test, bootstrap) on the extracted data and computes significance levels, confidence intervals, and effect sizes.</span>
+      </li>
+      <li>
+        <span class="step-num">4</span>
+        <span>Generates a structured natural language report summarising the results, statistical significance, and concrete business recommendations — ready to share immediately.</span>
+      </li>
+    </ol>
+  </div>
+
+  <!-- Meta -->
+  <div class="card">
+    <h2 style="margin-bottom: 24px;">Project Details</h2>
+    <div class="meta-grid">
+      <div class="meta-block">
+        <h4>Role</h4>
+        <p>Sole architect & developer</p>
+      </div>
+      <div class="meta-block">
+        <h4>Stack</h4>
+        <p>Python · LangChain · OpenAI API · SQL · SciPy</p>
+      </div>
+      <div class="meta-block">
+        <h4>Focus</h4>
+        <p>Agentic workflows · Statistical rigor · LLM orchestration</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+const canvas = document.getElementById('starCanvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize);
+resize();
+for (let i = 0; i < 200; i++) {
+  stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 1.5, speed: Math.random() * 0.4 });
+}
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "white";
+  stars.forEach(star => {
+    ctx.beginPath(); ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2); ctx.fill();
+    star.y -= star.speed;
+    if (star.y < 0) star.y = canvas.height;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+</html>
