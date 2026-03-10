@@ -196,7 +196,7 @@ a:hover { text-shadow: 0 0 10px var(--accent); }
   <div class="page-header">
     <span class="tag">AI & Automation</span>
     <h1>A/B Testing Autopilot</h1>
-    <p>An autonomous agent architecture that eliminates hours of manual analyst work by automating the full A/B testing pipeline — from SQL extraction and statistical validation to natural language reporting.</p>
+    <p>An autonomous agent that streamlines the full A/B testing pipeline. Point it at any data source, specify your groups and metrics, and it handles the rest — from automatic field detection and statistical validation to natural language reporting.</p>
     <div class="tech-row">
       <span class="chip">LangChain</span>
       <span class="chip">OpenAI</span>
@@ -228,18 +228,22 @@ a:hover { text-shadow: 0 0 10px var(--accent); }
     <ol class="steps">
       <li>
         <span class="step-num">1</span>
-        <span>Receives a plain-language experiment description and autonomously generates the SQL queries needed to extract the relevant user cohorts from the data warehouse.</span>
+        <span>User provides a <strong>file path</strong> (CSV, Excel, etc.) or a <strong>database connection string</strong> as the data source — no SQL writing required.</span>
       </li>
       <li>
         <span class="step-num">2</span>
-        <span>Validates statistical assumptions — normality, minimum detectable effect, sample size adequacy, and variance homogeneity — flagging any violations before proceeding.</span>
+        <span>The agent <strong>automatically detects all available fields</strong> in the data source and presents them, so the user can identify the group column (control vs. treatment) and the metrics of interest.</span>
       </li>
       <li>
         <span class="step-num">3</span>
-        <span>Runs the appropriate hypothesis tests (t-test, z-test, bootstrap) on the extracted data and computes significance levels, confidence intervals, and effect sizes.</span>
+        <span>Validates statistical assumptions — normality, minimum detectable effect, sample size adequacy, and variance homogeneity — flagging any violations before proceeding.</span>
       </li>
       <li>
         <span class="step-num">4</span>
+        <span>Runs the appropriate hypothesis tests (t-test, z-test, bootstrap) and computes significance levels, confidence intervals, and effect sizes for each selected metric.</span>
+      </li>
+      <li>
+        <span class="step-num">5</span>
         <span>Generates a structured natural language report summarising the results, statistical significance, and concrete business recommendations — ready to share immediately.</span>
       </li>
     </ol>
