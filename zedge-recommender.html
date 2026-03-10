@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zedge Recommender | Yihan Cao</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-dark: #050816;
+  --card-bg: #1d1836;
+  --accent: #ffcc33;
+  --text-main: #f3f3f3;
+  --text-dim: #aaa6c3;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+#starCanvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background: radial-gradient(circle at center, #111 0%, #050816 100%);
+}
+.container { max-width: 900px; margin: 0 auto; padding: 60px 20px 120px; }
+
+/* Back navigation */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-bottom: 56px;
+  transition: color 0.25s, gap 0.25s;
+}
+.back-btn:hover { color: var(--accent); gap: 14px; text-shadow: none; }
+.back-btn svg { transition: transform 0.25s; }
+.back-btn:hover svg { transform: translateX(-3px); }
+
+/* Page header */
+.page-header { margin-bottom: 48px; }
+.tag {
+  background: rgba(145, 94, 255, 0.2);
+  border: 1px solid var(--accent);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 18px;
+}
+.page-header h1 {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.page-header p {
+  font-size: 1.05rem;
+  color: var(--text-dim);
+  max-width: 660px;
+  line-height: 1.75;
+}
+.tech-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.chip {
+  padding: 5px 16px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 204, 51, 0.35);
+  background: rgba(255, 204, 51, 0.08);
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 35px;
+  margin-bottom: 28px;
+  position: relative;
+}
+.card h2 { font-size: 1.35rem; color: white; margin-bottom: 6px; }
+.card .sub { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 24px; }
+
+/* Result callout */
+.result-banner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: rgba(255, 204, 51, 0.07);
+  border: 1px solid rgba(255, 204, 51, 0.25);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 28px;
+}
+.result-banner .number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  white-space: nowrap;
+}
+.result-banner .label {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.result-banner .label strong { color: var(--text-main); }
+
+/* Challenge cards grid */
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 4px;
+}
+.challenge-card {
+  background: #161030;
+  border-radius: 14px;
+  padding: 22px;
+  border-left: 3px solid var(--accent);
+}
+.challenge-card h4 {
+  color: var(--accent);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+.challenge-card p {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+/* Steps list */
+.steps { list-style: none; padding: 0; margin-top: 4px; }
+.steps li {
+  display: flex;
+  gap: 18px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+.steps li:last-child { border-bottom: none; }
+.step-num {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,204,51,0.12);
+  border: 1px solid rgba(255,204,51,0.35);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 2px;
+}
+
+/* Meta grid */
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+.meta-block h4 { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+.meta-block p { font-size: 0.92rem; color: var(--text-main); line-height: 1.6; }
+
+a { color: var(--accent); text-decoration: none; transition: 0.3s; }
+a:hover { text-shadow: 0 0 10px var(--accent); }
+</style>
+</head>
+<body>
+<canvas id="starCanvas"></canvas>
+<div class="container">
+
+  <a href="index.html" class="back-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to portfolio
+  </a>
+
+  <!-- Header -->
+  <div class="page-header">
+    <span class="tag">Machine Learning</span>
+    <h1>Zedge Recommender System</h1>
+    <p>A ground-up redesign of Zedge's production recommender system, serving millions of users at scale. The project tackled some of the hardest challenges in RecSys — cold start, data sparsity, and scalability — and delivered a measurable uplift in the company's core North Star metric.</p>
+    <div class="tech-row">
+      <span class="chip">LightFM</span>
+      <span class="chip">Python</span>
+      <span class="chip">BigQuery</span>
+      <span class="chip">Feature Engineering</span>
+      <span class="chip">A/B Testing</span>
+      <span class="chip">RecSys</span>
+    </div>
+  </div>
+
+  <!-- Result banner -->
+  <div class="result-banner">
+    <div class="number">+43%</div>
+    <div class="label"><strong>Increase in North Star metric</strong><br>Measured via controlled A/B test in production.</div>
+  </div>
+
+  <!-- Challenges -->
+  <div class="card">
+    <h2>Key Challenges</h2>
+    <p class="sub">Production recommender systems at scale come with a unique set of ML challenges that go well beyond model accuracy.</p>
+    <div class="challenges-grid">
+      <div class="challenge-card">
+        <h4>Cold Start</h4>
+        <p>New users and new content items have no interaction history. Addressed by designing fallback strategies using content-based signals and metadata embeddings to bootstrap recommendations from day one.</p>
+      </div>
+      <div class="challenge-card">
+        <h4>Data Sparsity</h4>
+        <p>The user–item interaction matrix was extremely sparse. Applied dimensionality reduction and implicit feedback modelling to extract meaningful signals from limited engagement data.</p>
+      </div>
+      <div class="challenge-card">
+        <h4>Scalability</h4>
+        <p>The system needed to serve personalised recommendations to millions of users in real time. Optimised the pipeline for low-latency inference and efficient candidate retrieval at production scale.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Approach -->
+  <div class="card">
+    <h2>Approach</h2>
+    <p class="sub">How the redesigned system was built and validated.</p>
+    <ol class="steps">
+      <li>
+        <span class="step-num">1</span>
+        <span>Audited the existing system to identify bottlenecks in ranking quality, coverage, and latency — establishing a clear baseline before any changes.</span>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <span>Redesigned the feature engineering pipeline to incorporate richer user behaviour signals, content metadata embeddings, and temporal interaction patterns.</span>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <span>Built and trained a hybrid ranking model using <strong>LightFM</strong>, leveraging both collaborative filtering and content-based signals to improve recommendation quality — particularly effective at handling sparsity and cold start simultaneously.</span>
+      </li>
+      <li>
+        <span class="step-num">4</span>
+        <span>Implemented cold start fallback strategies using content-based filtering and popularity priors to handle new users and new items gracefully.</span>
+      </li>
+      <li>
+        <span class="step-num">5</span>
+        <span>Deployed to production and validated impact via a controlled A/B test, confirming a statistically significant 43% uplift in the North Star metric.</span>
+      </li>
+    </ol>
+  </div>
+
+  <!-- Meta -->
+  <div class="card">
+    <h2 style="margin-bottom: 24px;">Project Details</h2>
+    <div class="meta-grid">
+      <div class="meta-block">
+        <h4>Company</h4>
+        <p>Zedge Inc (NYSE: ZDGE)</p>
+      </div>
+      <div class="meta-block">
+        <h4>Role</h4>
+        <p>Data Scientist — sole ML owner of the recommender system redesign</p>
+      </div>
+      <div class="meta-block">
+        <h4>Stack</h4>
+        <p>Python · LightFM · BigQuery · SQL</p>
+      </div>
+      <div class="meta-block">
+        <h4>Focus</h4>
+        <p>Ranking models · Feature engineering · Cold start · Scalable inference</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const canvas = document.getElementById('starCanvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize);
+resize();
+for (let i = 0; i < 200; i++) {
+  stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 1.5, speed: Math.random() * 0.4 });
+}
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "white";
+  stars.forEach(star => {
+    ctx.beginPath(); ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2); ctx.fill();
+    star.y -= star.speed;
+    if (star.y < 0) star.y = canvas.height;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+</html>
